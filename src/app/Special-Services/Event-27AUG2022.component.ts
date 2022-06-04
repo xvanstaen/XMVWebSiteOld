@@ -56,6 +56,10 @@ export class Event27AugComponent {
     total_rooms:number=0;
     resetAccess:boolean=false;
 
+    myDate:string='';
+    myTime=new Date();
+    thetime:string='';
+
     MrName:string='';
     MrsName:string='';
 
@@ -80,6 +84,7 @@ export class Event27AugComponent {
       yourComment: new  FormControl(''),
       readAccess: new  FormControl(0),
       writeAccess: new  FormControl(0),
+      
     });
 
     CommentStructure={
@@ -144,6 +149,8 @@ export class Event27AugComponent {
     Table_User_Data:Array<EventAug>=[];
     Table_DecryptPSW:Array<string>=[];
     Individual_User_Data= new EventAug;
+    Retrieve_User_Data:Array<EventAug>=[];
+    Tab_Record_Update:Array<Boolean>=[];
 
     recordToUpdate:number=0;
 
@@ -158,6 +165,9 @@ onWindowResize() {
       this.getScreenWidth = window.innerWidth;
       this.getScreenHeight = window.innerHeight;
       this.  myKeyUp='';
+      this.myTime=new Date();
+      this.myDate= this.myTime.toString().substring(8,24);
+      this.thetime=this.myDate+this.myTime.getTime();
       // get all the records from the login component via the @input
       this.Table_User_Data = this.LoginTable_User_Data;
       this.Table_DecryptPSW= this.LoginTable_DecryptPSW;
@@ -177,6 +187,10 @@ onWindowResize() {
 
       } else {
         this.invite=true;
+        for (this.i=0; this.i<this.Table_User_Data.length; this.i++){
+          this.Tab_Record_Update.push(false);
+          this.Tab_Record_Update[this.i]=false;
+        }
           //this.manageInvitees(); // retrieve the object
           // a user is connected so must display his/her information
           this.myForm.controls['brunch'].setValue(this.Table_User_Data[this.identification.id].brunch);
@@ -275,7 +289,7 @@ ResetAccess(){
   this.myForm.controls['writeAccess'].setValue(0);
 }
 
-  ConfirmData(){
+ ConfirmData(){
       const i=this.identification.id;
 
       // always update the record 
@@ -364,7 +378,7 @@ ResetAccess(){
           this.Table_User_Data[this.i].psw= this.Encrypt;
 
           this.Individual_User_Data=this.Table_User_Data[this.i];
-          
+          this.Tab_Record_Update[this.i]=true;
           this.count_invitees('N')
   }  
 
@@ -416,12 +430,21 @@ count_invitees(ConvertComment:string){
 }
 
 ConvertComment(){
+
+  if (this.Table_User_Data[this.identification.id].timeStamp===undefined){
+    this.Table_User_Data[this.identification.id].timeStamp= this.thetime;
+  }
   this.CommentStructure=JSON.parse(this.Table_User_Data[this.identification.id].yourComment);
+
   if (this.CommentStructure.dishMr==='M'){
     this.CommentStructure.dishMr='B';
   }
   this.myForm.controls['dishMr'].setValue(this.CommentStructure.dishMr);
   this.myForm.controls['dishMrs'].setValue(this.CommentStructure.dishMrs);
+  if (this.CommentStructure.golf===0){
+    this.CommentStructure.holes=0;
+    this.CommentStructure.day='';
+  }
   this.myForm.controls['golf'].setValue(this.CommentStructure.golf);
   this.myForm.controls['golfHoles'].setValue(this.CommentStructure.holes);
   this.myForm.controls['yourComment'].setValue(this.CommentStructure.theComments);
@@ -438,6 +461,7 @@ ConvertComment(){
   if (this.CommentStructure.writeAccess===undefined){
     this.CommentStructure.writeAccess=0;
   }
+
   this.myForm.controls['writeAccess'].setValue(this.CommentStructure.writeAccess);
 
   this.myForm.controls['practiceSaturday'].setValue(this.CommentStructure.practiceSaturday);
@@ -470,20 +494,76 @@ ConvertComment(){
 
   SaveRecord(){
     this.Google_Object_Name="Event-27AUG2022.json";
-    this.resetAccess=false;
-    this.HTTP_Address=this.Google_Bucket_Access_RootPOST + this.Google_Bucket_Name + "/o?name=" + this.Google_Object_Name  + '&uploadType=media';
-    this.http.post(this.HTTP_Address,  this.Table_User_Data )
-    .subscribe(res => {
-          this.returnDATA.emit(this.Table_User_Data);
-          
+    // read record
+    // if time stamp still is the same then can update the record
+    // otherwise check when each item was updated
+    // ***********
+    this.myTime=new Date();
+    this.myDate= this.myTime.toString().substring(8,24);
+    this.thetime=this.myDate+this.myTime.getTime();
+    // ***********
+   
+      // ****** get content of object *******
+      this.HTTP_Address=this.Google_Bucket_Access_Root + this.Google_Bucket_Name + "/o/" + this.Google_Object_Name   + "?alt=media";     
+      this.http.get<any>(this.HTTP_Address )
+                  .subscribe(data => {
+                  this.bucket_data=JSON.stringify(data);
+                  var obj = JSON.parse(this.bucket_data);
+                  this.Error_Access_Server='';
+                  if (this.invite===true){
+                      for (this.i=0; this.i<obj.length; this.i++){
+                          //this.Individual_User_Data= new EventAug;
+                          //this.Retrieve_User_Data.push(this.Individual_User_Data);
+                          //this.Retrieve_User_Data[this.i] =obj[this.i];
+                          if (obj[this.i].timeStamp!== undefined && obj[this.i].timeStamp!== this.Table_User_Data[this.i].timeStamp ){
+                            // check if record has been updated
 
-          },
-          error_handler => {
-            this.Error_Access_Server= "  object ===>   " + JSON.stringify( this.Table_User_Data)  + '   error message: ' + error_handler.message + ' error status: '+ error_handler.statusText+' name: '+ error_handler.name + ' url: '+ error_handler.url;
-            // alert(this.Error_Access_Server_Post + ' --- ' +  this.Sent_Message + ' -- http post = ' + this.HTTP_AddressPOST);
-          } 
-     )
+                            // record has been updated
+                            // ask the user to 
+                            this.Error_Access_Server= 'record ' +this.i+ 'has been updated by another user; redo your updates'
+                            this.Table_User_Data[this.i].timeStamp=obj[this.i].timeStamp;
+                            this.AccessRecord(this.i);
+                            this.i=obj.length;
+                          }
+                      }
+                    }
+                  else {
+                    // check only one record
+                    if (obj[this.identification.id].timeStamp!== undefined && obj[this.identification.id].timeStamp!== this.Table_User_Data[this.identification.id].timeStamp ){
+                      this.Table_User_Data[this.i].timeStamp=obj[this.i].timeStamp;
+                      this.AccessRecord(this.i);
+                      this.Error_Access_Server= 'record ' +this.i+ 'has been updated by another user; redo your updates'   
+                    }
+                  }
+                  if (this.Error_Access_Server===''){
+                        this.resetAccess=false;
+                        if (this.invite===true){
+                              for (this.i=0; this.i<this.Tab_Record_Update.length; this.i++){
+                                if (this.Tab_Record_Update[this.i]===true){
+                                      this.Table_User_Data[this.i].timeStamp=this.thetime;
+                                }
+                              }
+                        } 
+                        else{
+                          this.Table_User_Data[this.identification.id].timeStamp=this.thetime;
+                        }
+
+                        this.HTTP_Address=this.Google_Bucket_Access_RootPOST + this.Google_Bucket_Name + "/o?name=" + this.Google_Object_Name  + '&uploadType=media';
+                        this.http.post(this.HTTP_Address,  this.Table_User_Data )
+                        .subscribe(res => {
+                              this.returnDATA.emit(this.Table_User_Data);
+                              
+
+                              },
+                              error_handler => {
+                                this.Error_Access_Server= "  object ===>   " + JSON.stringify( this.Table_User_Data)  + '   error message: ' + error_handler.message + ' error status: '+ error_handler.statusText+' name: '+ error_handler.name + ' url: '+ error_handler.url;
+                                // alert(this.Error_Access_Server_Post + ' --- ' +  this.Sent_Message + ' -- http post = ' + this.HTTP_AddressPOST);
+                              } 
+                        )
+                      }
+              })
   }
+
 
   onCrypt(type_crypto:string){
     if (type_crypto==='Encrypt'){
