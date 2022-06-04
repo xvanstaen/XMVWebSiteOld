@@ -13,13 +13,14 @@ ENV NODE_ENV=production
 WORKDIR /usr/src/app 
 COPY package.json package-lock.json ./
 #COPY ["package.json", "package-lock.json*", "./"]
-RUN npm install npm@8.10.0 --only=production 
+RUN npm install npm@8.12.0 --only=production 
 #RUN npm install --production
 
 COPY . ./
 #COPY . .
 
 RUN  npm run build -prod
+
 
 FROM nginx:alpine
 
