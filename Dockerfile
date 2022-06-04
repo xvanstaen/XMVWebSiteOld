@@ -13,7 +13,7 @@ ENV NODE_ENV=production
 WORKDIR /usr/src/app 
 COPY package.json package-lock.json ./
 #COPY ["package.json", "package-lock.json*", "./"]
-RUN npm install npm@8.8.0 --only=production 
+RUN npm install npm@8.10.0 --only=production 
 #RUN npm install --production
 
 COPY . ./
@@ -24,7 +24,7 @@ RUN  npm run build -prod
 FROM nginx:alpine
 
 #RUN rm /etc/nginx/nginx.conf  /etc/nginx/conf.d/default.conf
-COPY --from=my-app-build /usr/src/app/dist/AllFunctions/ /usr/share/nginx/html/
+COPY --from=my-app-build /usr/src/app/dist/ /usr/share/nginx/html/
 COPY ConfNGINX /etc/nginx
 
 # must be used when test on Docker and in Docker must select 8080/TCP and enter port 80xx
@@ -34,7 +34,7 @@ EXPOSE 8080
 #VOLUME /etc/nginx
 
 ### Docker build command  
-###            docker build -t AllFunctions:latest .
+###            docker build -t xmvwebsite:latest .
 
 ### Docker run command
-###            docker run -it --rm  --name cont_AllFunctions -p 8082:8080 image_website:latest
+###            docker run -it --rm  --name cont_XMVWebSite -p 8082:8080 image_website:latest
