@@ -54,6 +54,7 @@ export class Event27AugComponent {
     invite:boolean=true;
     total_invitee:number=0;
     total_rooms:number=0;
+    resetAccess:boolean=false;
 
     MrName:string='';
     MrsName:string='';
@@ -268,6 +269,12 @@ onWindowResize() {
     });
   }
 
+ResetAccess(){
+  this.resetAccess=true;
+  this.myForm.controls['readAccess'].setValue(0);
+  this.myForm.controls['writeAccess'].setValue(0);
+}
+
   ConfirmData(){
       const i=this.identification.id;
 
@@ -290,6 +297,7 @@ onWindowResize() {
       this.CommentStructure.practiceSaturday=this.myForm.controls['practiceSaturday'].value;
       this.CommentStructure.bouleSaturday=this.myForm.controls['bouleSaturday'].value;
       this.CommentStructure.bouleSunday=this.myForm.controls['bouleSunday'].value;
+
       this.CommentStructure.writeAccess ++;
       this.Table_User_Data[i].yourComment=JSON.stringify(this.CommentStructure);
      
@@ -336,6 +344,13 @@ onWindowResize() {
           this.CommentStructure.holes=this.myForm.controls['golfHoles'].value;
           this.CommentStructure.day=this.myForm.controls['day'].value;
           this.CommentStructure.theComments=this.myForm.controls['yourComment'].value;
+          if (this.resetAccess===true) {
+            this.CommentStructure.writeAccess=0;
+            this.CommentStructure.readAccess=0;
+            this.myForm.controls['readAccess'].setValue(0);
+            this.myForm.controls['writeAccess'].setValue(0);
+            this.resetAccess=false;
+          }
           this.Table_User_Data[this.i].yourComment=JSON.stringify(this.CommentStructure);
 
           this.Table_User_Data[this.i].id=this.i;
@@ -351,12 +366,10 @@ onWindowResize() {
           this.Individual_User_Data=this.Table_User_Data[this.i];
           
           this.count_invitees('N')
-
-
-
   }  
 
 ReadRecord(){
+
   if (this.myForm.controls['readRecord'].value<=this.Table_User_Data.length){
     // read the item
         this.i=this.myForm.controls['readRecord'].value;
@@ -373,7 +386,13 @@ ReadRecord(){
         this.ConvertComment();
 
         this.myForm.controls['readRecord'].setValue(0);
-        this.recordToUpdate=this.i;
+        if (this.resetAccess===true) {
+          this.CommentStructure.writeAccess=0;
+          this.CommentStructure.readAccess=0;
+          this.myForm.controls['readAccess'].setValue(0);
+          this.myForm.controls['writeAccess'].setValue(0);
+          this.resetAccess=false;
+        }
   } else { this.error_message='wrong record to access';}
 }
 
@@ -451,11 +470,12 @@ ConvertComment(){
 
   SaveRecord(){
     this.Google_Object_Name="Event-27AUG2022.json";
-
+    this.resetAccess=false;
     this.HTTP_Address=this.Google_Bucket_Access_RootPOST + this.Google_Bucket_Name + "/o?name=" + this.Google_Object_Name  + '&uploadType=media';
     this.http.post(this.HTTP_Address,  this.Table_User_Data )
     .subscribe(res => {
           this.returnDATA.emit(this.Table_User_Data);
+          
 
           },
           error_handler => {
