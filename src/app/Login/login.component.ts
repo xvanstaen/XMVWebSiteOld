@@ -157,7 +157,7 @@ export class LoginComponent {
                       if (this.myForm.controls['action'].value==='' || this.myForm.controls['action'].value===null){ 
                         this.routing_code=4;
                         // TO BE DELETED AFTER TESTING PERIOD
-                        this.myForm.controls['action'].setValue("Event-27AUG2022");
+                        // this.myForm.controls['action'].setValue("Event-27AUG2022");
                       } else if (this.myForm.controls['action'].value==='Manage Contact'){
                           this.routing_code=1; // go to Respond_Contact
                       } else if (this.myForm.controls['action'].value==='Event-27AUG2022'){
