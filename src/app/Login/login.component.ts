@@ -193,8 +193,8 @@ export class LoginComponent {
 
 ValidateEventAug(){
   this.text_error='';
-  for (this.i=0; this.i<this.Table_User_Data.length && (this.Table_User_Data[this.i].UserId!==this.myForm.controls['userId'].value && 
-    this.Table_DecryptPSW[this.i]!==this.myForm.controls['password'].value ); this.i++ ){
+  for (this.i=0; this.i<this.Table_User_Data.length && (this.Table_User_Data[this.i].UserId!=this.myForm.controls['userId'].value || 
+    this.Table_DecryptPSW[this.i]!=this.myForm.controls['password'].value ); this.i++ ){
     }
 
   if (this.i>=this.Table_User_Data.length){

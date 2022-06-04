@@ -202,7 +202,7 @@
  <br>S'il n'a pas les siennes JP aura une excuse toute faite pour les 'carreaux' qu'il aura manqué! 
  <br><br> Pour s'assurer que tout est bien organisé et que nous répondons à vos besoins du mieux possible, remplissez le formulaire ci-dessous et n'hésitez pas à nous préciser dans la rubrique 'Vos commentaires' si vous avez des restrictions au niveau nourriture ou de faire d'autres demandes 
  (nous ne pouvons garantir que toutes les demandes seront satisfaites car avec certaines personnes on sait à quel type de commentaires/demandes on peut s'attendre 🤣🤣🤣) 
- <br><br> <span style='color:blue;'>Pour la soirée, tenue vestimentaire décontractée, bien sûr pas de short ni de sandales. </span>
+ <br><br> <span style='color:blue;'>Pour la soirée, tenue vestimentaire décontractée et correcte, bien sûr pas de short, sandales, jean et t-sirt. </span>
  <br> <br>Pour ceux qui viendront plus tôt (pour profiter du bel environnement et/ou jouer à la pétanque ou jouer au golf), il y aura la possibilité de prendre une douche et de se changer.
  
  <span *ngIf="Table_User_Data[identification.id].night!=='na'">
@@ -401,8 +401,8 @@
           <label class="field-name" style="width:90%;">{{LanguageLabels[8]}}</label>
 
             
-          <label class="field-name" style="margin-left:40px;  max-width:280px;  ">1) {{LanguageLabels[12]}}</label>
-          <span *ngIf="CommentStructure.golf===0">
+          <label class="field-name" style="margin-left:40px;  max-width:280px;  ">1) {{LanguageLabels[12]}}</label> 
+          <span *ngIf="CommentStructure.golf!==1 && CommentStructure.golf!==2">
               <select  class=" input_select" type="number" formControlName="golf" id="golf">
                 <option selected value=0>0</option>
                 <option value=1>1</option>
@@ -427,11 +427,13 @@
 
       <div>
         <label class="field-name" style="margin-left:40px;  max-width:280px;  ">2) {{LanguageLabels[9]}}</label>
+        <span *ngIf="CommentStructure.day===''">  
         <select id="day"  class="input_select "  formControlName="day">
           <option selected value=""></option>
           <option value="Sat">{{LanguageLabels[10]}}</option>
           <option value="Sun">{{LanguageLabels[11]}}</option>
         </select>  
+      </span>
         <span *ngIf="CommentStructure.day==='Sat'">    
             <select id="day"  class="input_select "  formControlName="day">
               <option value=""></option>
@@ -483,6 +485,7 @@
           </div>
         </div>
         <button id='but_1' class="sizeButtons" (click)="ConfirmData()"> {{LanguageLabels[17]}}</button>
+        <span *ngIf="updateRecord===1" style="color:black; font-size:14px; margin-left:20px;">{{message}}</span>
       </form>
       <br><br>
 </div>

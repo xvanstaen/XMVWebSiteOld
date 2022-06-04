@@ -151,8 +151,10 @@ export class Event27AugComponent {
     Individual_User_Data= new EventAug;
     Retrieve_User_Data:Array<EventAug>=[];
     Tab_Record_Update:Array<Boolean>=[];
-
+    message:string='';
     recordToUpdate:number=0;
+    updateRecord:number=0;
+
 
 @HostListener('window:resize', ['$event'])
 onWindowResize() {
@@ -314,7 +316,7 @@ ResetAccess(){
 
       this.CommentStructure.writeAccess ++;
       this.Table_User_Data[i].yourComment=JSON.stringify(this.CommentStructure);
-     
+      this.updateRecord=1;
       this.SaveRecord();
 
   }
@@ -512,14 +514,9 @@ ConvertComment(){
                   this.Error_Access_Server='';
                   if (this.invite===true){
                       for (this.i=0; this.i<obj.length; this.i++){
-                          //this.Individual_User_Data= new EventAug;
-                          //this.Retrieve_User_Data.push(this.Individual_User_Data);
-                          //this.Retrieve_User_Data[this.i] =obj[this.i];
-                          if (obj[this.i].timeStamp!== undefined && obj[this.i].timeStamp!== this.Table_User_Data[this.i].timeStamp ){
-                            // check if record has been updated
 
-                            // record has been updated
-                            // ask the user to 
+                          if (obj[this.i].timeStamp!== undefined && obj[this.i].timeStamp!== this.Table_User_Data[this.i].timeStamp ){
+ 
                             this.Error_Access_Server= 'record ' +this.i+ 'has been updated by another user; redo your updates'
                             this.Table_User_Data[this.i].timeStamp=obj[this.i].timeStamp;
                             this.AccessRecord(this.i);
@@ -552,7 +549,7 @@ ConvertComment(){
                         this.http.post(this.HTTP_Address,  this.Table_User_Data )
                         .subscribe(res => {
                               this.returnDATA.emit(this.Table_User_Data);
-                              
+                              this.message='Record is updated / Mise à jour réussie'
 
                               },
                               error_handler => {
