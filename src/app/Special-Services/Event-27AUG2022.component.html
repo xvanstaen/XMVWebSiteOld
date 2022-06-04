@@ -653,26 +653,25 @@
               </span>
 
 
-             <span *ngIf="CommentStructure.bouleSunday==='y'"> 
-                <label class="field-name" >Pétanque {{LanguageLabels[11]}}</label>
+            
+            <label class="field-name" >Pétanque {{LanguageLabels[11]}}</label>
+            <span *ngIf="CommentStructure.bouleSunday==='y'"> 
                 <select id="BSunday"  class="input_select "  formControlName="bouleSunday">
                   <option selected value="y">{{LanguageLabels[6]}}</option>
                   <option value="n">{{LanguageLabels[7]}}</option>
                 </select>  
             </span>
             <span *ngIf="CommentStructure.bouleSunday==='n'"> 
-              <label class="field-name" >Pétanque {{LanguageLabels[11]}}</label>
               <select id="BSunday"  class="input_select "  formControlName="bouleSunday">
                 <option value="y">{{LanguageLabels[6]}}</option>
                 <option selected value="n">{{LanguageLabels[7]}}</option>
               </select>  
-          </span>
+            </span>
 
             <label class="field-name" style="width:90%;">{{LanguageLabels[8]}}</label>
 
-            
             <label class="field-name" style="margin-left:40px;  max-width:280px;  ">1) {{LanguageLabels[12]}}</label>
-            <span *ngIf="CommentStructure.golf===0">
+            <span *ngIf="CommentStructure.golf!==1 && CommentStructure.golf!==2">
                 <select  class=" input_select" type="number" formControlName="golf" id="golf">
                   <option selected value=0>0</option>
                   <option value=1>1</option>
@@ -721,11 +720,13 @@
         </div>
             <div>
               <label class="field-name" style="margin-left:40px;  max-width:280px;  ">3) {{LanguageLabels[13]}}</label>
+              <span *ngIf="CommentStructure.holes===0">
               <select id="holes" type="number" class="input_select "  formControlName="golfHoles">
                 <option selected value=0>0 </option>
                 <option  value=9>9 {{LanguageLabels[14]}}</option>
                 <option value=18>18 {{LanguageLabels[14]}}</option>
               </select> 
+              </span> 
               <span *ngIf="CommentStructure.holes===9">
                     <select id="holes" type="number" class="input_select "  formControlName="golfHoles">
                       <option value=0>0 </option>

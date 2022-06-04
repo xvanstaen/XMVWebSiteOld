@@ -301,14 +301,14 @@ ResetAccess(){
 
       this.CommentStructure.dishMr=this.myForm.controls['dishMr'].value;
       this.CommentStructure.dishMrs=this.myForm.controls['dishMrs'].value;
-      this.CommentStructure.golf=this.myForm.controls['golf'].value;
+      this.CommentStructure.golf=Number(this.myForm.controls['golf'].value);
       if (this.myForm.controls['golf'].value===0){
           this.myForm.controls['golfHoles'].setValue(0);
           this.myForm.controls['day'].setValue('');
-      } else{
-          this.CommentStructure.holes=this.myForm.controls['golfHoles'].value;
-          this.CommentStructure.day=this.myForm.controls['day'].value;
-      }
+      } 
+      this.CommentStructure.holes=Number(this.myForm.controls['golfHoles'].value);
+      this.CommentStructure.day=this.myForm.controls['day'].value;
+      
       this.CommentStructure.theComments=this.myForm.controls['yourComment'].value;
       this.CommentStructure.practiceSaturday=this.myForm.controls['practiceSaturday'].value;
       this.CommentStructure.bouleSaturday=this.myForm.controls['bouleSaturday'].value;
@@ -356,8 +356,8 @@ ResetAccess(){
           this.CommentStructure.practiceSaturday=this.myForm.controls['practiceSaturday'].value;
           this.CommentStructure.bouleSaturday=this.myForm.controls['bouleSaturday'].value;
           this.CommentStructure.bouleSunday=this.myForm.controls['bouleSunday'].value;
-          this.CommentStructure.golf=this.myForm.controls['golf'].value;
-          this.CommentStructure.holes=this.myForm.controls['golfHoles'].value;
+          this.CommentStructure.golf=Number(this.myForm.controls['golf'].value);
+          this.CommentStructure.holes=Number(this.myForm.controls['golfHoles'].value);
           this.CommentStructure.day=this.myForm.controls['day'].value;
           this.CommentStructure.theComments=this.myForm.controls['yourComment'].value;
           if (this.resetAccess===true) {
@@ -426,6 +426,7 @@ count_invitees(ConvertComment:string){
     if (ConvertComment==='Y'){
         this.identification.id=this.i;
         this.ConvertComment();
+        this.Table_User_Data[this.i].yourComment=JSON.stringify(this.CommentStructure);
     }
   }
   this. total_rooms = this. total_rooms/2;
@@ -443,12 +444,14 @@ ConvertComment(){
   }
   this.myForm.controls['dishMr'].setValue(this.CommentStructure.dishMr);
   this.myForm.controls['dishMrs'].setValue(this.CommentStructure.dishMrs);
+  this.CommentStructure.golf=Number(this.CommentStructure.golf);
+  this.CommentStructure.holes=Number(this.CommentStructure.holes);
   if (this.CommentStructure.golf===0){
     this.CommentStructure.holes=0;
     this.CommentStructure.day='';
   }
-  this.myForm.controls['golf'].setValue(this.CommentStructure.golf);
-  this.myForm.controls['golfHoles'].setValue(this.CommentStructure.holes);
+  this.myForm.controls['golf'].setValue(Number(this.CommentStructure.golf));
+  this.myForm.controls['golfHoles'].setValue(Number(this.CommentStructure.holes));
   this.myForm.controls['yourComment'].setValue(this.CommentStructure.theComments);
   this.myForm.controls['day'].setValue(this.CommentStructure.day);
   if (this.CommentStructure.practiceSaturday===undefined){
