@@ -451,11 +451,13 @@
       </div>
           <div>
             <label class="field-name" style="margin-left:40px;  max-width:280px;  ">3) {{LanguageLabels[13]}}</label>
-            <select id="holes" type="number" class="input_select "  formControlName="golfHoles">
-              <option selected value=0>0 </option>
-              <option  value=9>9 {{LanguageLabels[14]}}</option>
-              <option value=18>18 {{LanguageLabels[14]}}</option>
-            </select> 
+            <span *ngIf="CommentStructure.holes===0">
+                <select id="holes" type="number" class="input_select "  formControlName="golfHoles">
+                  <option selected value=0>0 </option>
+                  <option  value=9>9 {{LanguageLabels[14]}}</option>
+                  <option value=18>18 {{LanguageLabels[14]}}</option>
+                </select> 
+          </span> 
             <span *ngIf="CommentStructure.holes===9">
                   <select id="holes" type="number" class="input_select "  formControlName="golfHoles">
                     <option value=0>0 </option>

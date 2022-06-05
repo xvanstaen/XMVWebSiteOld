@@ -22,7 +22,8 @@ export class Event27AugComponent {
     private scroller: ViewportScroller,
     ) {}
   
-    httpHeader=new HttpHeaders();
+    myHeader=new HttpHeaders();
+    
     getScreenWidth: any;
     getScreenHeight: any;
     device_type:string='';
@@ -167,8 +168,8 @@ onWindowResize() {
       this.getScreenWidth = window.innerWidth;
       this.getScreenHeight = window.innerHeight;
 
-      this.httpHeader.set('content-type', 'application/json');
-      this.httpHeader.set('Cache-Control', 'no-store, private, max-age=0, no-transform');
+      //this.httpHeader.append('content-type', 'application/json');
+      //this.httpHeader.append('Cache-Control', 'no-store, must-revalidate, private, max-age=0, no-transform');
 
       this.  myKeyUp='';
       this.myTime=new Date();
@@ -251,7 +252,11 @@ onWindowResize() {
     // ****** get content of object *******
     this.Google_Object_Name="Event-27AUG2022.json";
     this.HTTP_Address=this.Google_Bucket_Access_Root + this.Google_Bucket_Name + "/o/" + this.Google_Object_Name   + "?alt=media"; 
-    this.http.get<any>(this.HTTP_Address , {'headers':this.httpHeader} )
+    this.myHeader=new HttpHeaders({
+      'content-type': 'application/json',
+      'Cache-Control': 'no-store, must-revalidate, private, max-age=0, no-transform'
+    });
+    this.http.get(this.HTTP_Address, {'headers':this.myHeader} )
           .subscribe((data ) => {
                
                 this.bucket_data=JSON.stringify(data);
@@ -514,7 +519,11 @@ ConvertComment(){
    
       // ****** get content of object *******
       this.HTTP_Address=this.Google_Bucket_Access_Root + this.Google_Bucket_Name + "/o/" + this.Google_Object_Name   + "?alt=media";     
-      this.http.get<any>(this.HTTP_Address , {'headers':this.httpHeader} )
+      this.myHeader=new HttpHeaders({
+        'content-type': 'application/json',
+        'Cache-Control': 'no-store, must-revalidate, private, max-age=0, no-transform'
+      });
+      this.http.get(this.HTTP_Address, {'headers':this.myHeader} )
                   .subscribe(data => {
                   this.bucket_data=JSON.stringify(data);
                   var obj = JSON.parse(this.bucket_data);
@@ -553,7 +562,11 @@ ConvertComment(){
                         }
 
                         this.HTTP_Address=this.Google_Bucket_Access_RootPOST + this.Google_Bucket_Name + "/o?name=" + this.Google_Object_Name  + '&uploadType=media';
-                        this.http.post(this.HTTP_Address,  this.Table_User_Data ,  {'headers':this.httpHeader} )
+                        this.myHeader=new HttpHeaders({
+                          'content-type': 'application/json',
+                          'Cache-Control': 'no-store, must-revalidate, private, max-age=0, no-transform'
+                        });
+                        this.http.post(this.HTTP_Address,  this.Table_User_Data , {'headers':this.myHeader} )
                         .subscribe(res => {
                               this.returnDATA.emit(this.Table_User_Data);
                               this.message='Record is updated / Mise à jour réussie'
