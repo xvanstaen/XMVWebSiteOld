@@ -17,6 +17,7 @@ export class LoginComponent {
   constructor(
     private router:Router,
     private http: HttpClient,
+    
     ) {}
 
     @Input() identification={
@@ -31,6 +32,8 @@ export class LoginComponent {
 
     @Output() my_output1= new EventEmitter<any>();
     @Output() my_output2= new EventEmitter<string>();
+
+    httpHeader=new HttpHeaders();
 
     getScreenWidth: any;
     getScreenHeight: any;
@@ -107,7 +110,8 @@ export class LoginComponent {
       this.getScreenHeight = window.innerHeight;
       this.device_type = navigator.userAgent;
       this.device_type = this.device_type.substring(10, 48);
-     
+      this.httpHeader.set('content-type', 'application/json');
+      this.httpHeader.set('Cache-Control', 'no-store, private, max-age=0, no-transform');
       this.routing_code=0;
       this.getEventAug();
 
@@ -137,7 +141,7 @@ export class LoginComponent {
 // ****** get content of object *******
       this.HTTP_Address=this.Google_Bucket_Access_Root + this.Google_Bucket_Name + "/o/" + this.Google_Object_Name   + "?alt=media"; 
     
-      this.http.get(this.HTTP_Address )
+      this.http.get(this.HTTP_Address, {'headers':this.httpHeader} )
             .subscribe(data => {
             this.Encrypt_Data = data;
 
