@@ -206,6 +206,18 @@ h2{
     margin-top:30px;
  }
 
+ .sizeMap{
+    height:710px;
+    margin-top:30px;
+}
+
+.overlap_image{
+
+    margin-top:-710px;
+    height:710px;
+
+  }
+
  .flagone{
     margin-left:82%;
 }
@@ -245,10 +257,7 @@ h2{
     /*** ============== @media 490 ================ ***/
     /*** ====================================== ***/
     @media only screen and (max-width:490px) {
-     .sizeMap{
-        height:680px;
-        margin-top:30px;
-    }
+
 
  
       }
