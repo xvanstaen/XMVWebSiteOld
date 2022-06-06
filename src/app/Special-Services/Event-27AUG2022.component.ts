@@ -211,8 +211,8 @@ onWindowResize() {
           this.Table_User_Data[this.identification.id].yourComment=JSON.stringify(this.CommentStructure);
           this.SaveRecord();
 
-          }
-          if (this.invite=false){
+        }
+        if (this.invite===false){
               this.scroller.scrollToAnchor('targetTOP');
           }
   }    
