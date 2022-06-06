@@ -212,7 +212,9 @@ onWindowResize() {
           this.SaveRecord();
 
           }
-          this.scroller.scrollToAnchor('targetTOP');
+          if (this.invite=false){
+              this.scroller.scrollToAnchor('targetTOP');
+          }
   }    
 
   goDown(event:string){
