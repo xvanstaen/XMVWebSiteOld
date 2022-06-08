@@ -209,8 +209,11 @@ onWindowResize() {
           this.myForm.controls['night'].setValue(this.Table_User_Data[this.identification.id].night);
           this.Table_User_Data[this.identification.id].nbinvitees=Number(this.Table_User_Data[this.identification.id].nbinvitees);
           this.myForm.controls['nbInvitees'].setValue(this.Table_User_Data[this.identification.id].nbinvitees);
+          if (this.Table_User_Data[this.identification.id].myComment === null){
+            this.Table_User_Data[this.identification.id].myComment='';
+          }
           this.myForm.controls['myComment'].setValue(this.Table_User_Data[this.identification.id].myComment);
-    
+            
           this.ConvertComment();
           this.CommentStructure.readAccess ++;
           this.Table_User_Data[this.identification.id].yourComment=JSON.stringify(this.CommentStructure);
@@ -457,6 +460,9 @@ ConvertComment(){
     this.CommentStructure.dishMr='B';
   }
   this.myForm.controls['dishMr'].setValue(this.CommentStructure.dishMr);
+  if (this.CommentStructure.dishMrs===null){
+    this.CommentStructure.dishMrs='F';
+  }
   this.myForm.controls['dishMrs'].setValue(this.CommentStructure.dishMrs);
   this.CommentStructure.golf=Number(this.CommentStructure.golf);
   this.CommentStructure.holes=Number(this.CommentStructure.holes);

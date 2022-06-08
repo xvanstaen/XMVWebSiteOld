@@ -296,33 +296,25 @@
       </span>
 
       </span>
+          <span *ngIf="Table_User_Data[identification.id].night!=='na'">
+          <label class="field-name">{{LanguageLabels[5]}}  </label> 
 
-      <label class="field-name">{{LanguageLabels[5]}}  </label> 
-     
-       <span *ngIf="Table_User_Data[identification.id].night==='na'">
-        <select id="night"  class="input_select "  formControlName="night">
-            <option value="na" selected>not appl.</option>
-            <option value="y" >{{LanguageLabels[6]}}</option>
-            <option value="n" >{{LanguageLabels[7]}}</option>
-          </select>  
-      </span>
+          <span *ngIf="Table_User_Data[identification.id].night==='y'">
+            <select id="night"  class="input_select "  formControlName="night">
+                <option value="na" >not appl.</option>
+                <option value="y" selected>{{LanguageLabels[6]}}</option>
+                <option value="n" >{{LanguageLabels[7]}}</option>
+              </select>  
+          </span>
 
-      <span *ngIf="Table_User_Data[identification.id].night==='y'">
-        <select id="night"  class="input_select "  formControlName="night">
-            <option value="na" >not appl.</option>
-            <option value="y" selected>{{LanguageLabels[6]}}</option>
-            <option value="n" >{{LanguageLabels[7]}}</option>
-          </select>  
-      </span>
-
-      <span *ngIf="Table_User_Data[identification.id].night==='n'">
-        <select id="night"  class="input_select "  formControlName="night">
-            <option value="na" >not appl.</option>
-            <option value="y" >{{LanguageLabels[6]}}</option>
-            <option value="n" selected>{{LanguageLabels[7]}}</option>
-          </select>  
-      </span>
-
+          <span *ngIf="Table_User_Data[identification.id].night==='n'">
+            <select id="night"  class="input_select "  formControlName="night">
+                <option value="na" >not appl.</option>
+                <option value="y" >{{LanguageLabels[6]}}</option>
+                <option value="n" selected>{{LanguageLabels[7]}}</option>
+              </select>  
+          </span>
+        </span>
 
  
 
