@@ -26,16 +26,18 @@
   <div class="flag flagone" (click)="goDown('FR')"> <span><img   style="width:20px; height:20px;"  src="./assets/FlagFrance.png" ></span></div>
   <div class="flag flagtwo" (click)="goDown('UK')"> <span><img   style="width:20px; height:20px;"  src="./assets/FlagUK.png" ></span></div>
   <div *ngIf="invite===true; else manageInvite" >
-    <div  style="position:relative; margin-top:10px; margin-left:22%; float:left;"  >
+    <div  class="posOptions"  >
               <div *ngIf="yourLanguage==='FR'">
                  <span  (click)="goDown('targetRules')" class="dropdown-options dropdown-text">Information</span>
                  <span  (click)="goDown('targetDirection')" class="dropdown-options dropdown-text">Adresse</span>
                  <span  (click)="goDown('targetForm')" class="dropdown-options dropdown-text">Formulaire</span>
+                 <span  (click)="goDown('targetMenu')" class="dropdown-options dropdown-text">Menus</span>
               </div>
               <span *ngIf="yourLanguage==='UK'">
                 <span  (click)="goDown('targetRules')" class="dropdown-options dropdown-text">Details</span>
                 <span  (click)="goDown('targetDirection')" class="dropdown-options dropdown-text">Address</span>
                 <span  (click)="goDown('targetForm')" class="dropdown-options dropdown-text">Form</span>
+                <span  (click)="goDown('targetMenu')" class="dropdown-options dropdown-text">Menus</span>
             </span>
     </div>
     <div>
@@ -133,7 +135,7 @@
     To ensure that everything is well organized in advance, and that we meet your preferences as much as possible, please complete the form below. Kindly do not hesitate to provide additional information, should you have dietary restrictions and/or other specific requests (we regretfully can’t guarantee that we'll meet all your additional requirements, as we’re sure some of you may have peculiar comments/requests 🤣 ).
     <br>
     <br> <span style='color:blue;'>Dress code: casual, however no jeans, t-shirts and no beach attire such as shorts, singlets or slippers. </span>
-    <br><br> For those who arrive early (to enjoy the scenic environment and/or play petanque or play golf), there will be shower facilities, as the hotel rooms will be available from 4:00pm (check-out on Sunday Noon at the latest).
+    <br><br> For those who arrive early (to enjoy the scenic environment and/or play petanque or play golf), there will be shower facilities.
     <br><br>
     <span *ngIf="Table_User_Data[identification.id].night!=='na'">
       We booked a room for you and check-in will be from 4:00pm on Saturday (check-out Sunday noon latest). 
@@ -142,12 +144,12 @@
       <img   class="smallimages" src="./assets/Begude Room2.PNG" >
      <br><br>
     </span>
-    <br> As said above, the most important thing to do at this stage is to fill-up the form below 
+    <br> The most important thing to do at this stage is to fill-up the form below!
     <span style='color:blue; font-size:16px;'>AS SOON AS POSSIBLE</span>
       <br><br>
       We hope that you are as excited as us both, to have a lot of fun, camaraderie, and happiness during our celebration 🍾 🎉 🎊 🥂on 27-28Aug. 
       <br>Everything will be prepared for you, with you as our guests. 
-      <br>The only things you need to bring is joy, laughter and energy. It’s Easy, right? 😄😄
+      <br>The only things you need to bring is joy, laughter and energy. <br>It’s Easy, right? 😄😄
      <br><br>
     <h2>See you very soon!</h2> <br> <h2>Monica & Xavier</h2>
     <br><br>
@@ -182,7 +184,7 @@
  <span *ngIf='Table_User_Data[identification.id].nbinvitees!==2'>tu dois nous indiquer dans le formulaire ci-dessous si tu veux de la viande (bœuf) ou du poisson pour ton plat principal.</span>
  
 
- <br> <br> <span *ngIf='Table_User_Data[identification.id].nbinvitees===2'>Si vous etes intéressés</span> 
+ <br> <br> <span *ngIf='Table_User_Data[identification.id].nbinvitees===2'>Si vous êtes intéressés</span> 
  <span *ngIf='Table_User_Data[identification.id].nbinvitees!==2'>Si tu es intéressé</span>
   , il y aura la possibilité de faire un parcours de golf le samedi matin ou le dimanche matin, soit 9 ou 18 trous. On a besoin de connaître le nombre exact de joueurs afin de réserver au plus tôt. 
  <br><br>
@@ -202,9 +204,9 @@
  <img  style="width:80px; margin-left:20px; height:80px;" src="./assets/Begude Boule2.PNG" >
  <br>
  <br>S'il n'a pas les siennes JP aura une excuse toute faite pour les 'carreaux' qu'il aura manqué! 
- <br><br> Pour s'assurer que tout est bien organisé et que nous répondions à vos besoins du mieux possible, remplissez le formulaire ci-dessous et n'hésitez pas à nous préciser dans la rubrique 'Vos commentaires' si vous avez des restrictions au niveau nourriture ou de faire d'autres demandes 
+ <br><br> Pour s'assurer que tout est bien organisé et que nous répondionsdu mieux possible à vos besoins, remplissez le formulaire ci-dessous et n'hésitez pas à nous préciser dans la rubrique 'Vos commentaires' si vous avez des restrictions au niveau nourriture ou de faire d'autres demandes 
  (nous ne pouvons garantir que toutes les demandes seront satisfaites car avec certaines personnes on sait à quel type de commentaires/demandes on peut s'attendre 🤣🤣🤣) 
- <br><br> <span style='color:blue;'>Pour la soirée, tenue vestimentaire décontractée et correcte, bien sûr pas de short, sandales, jean et t-sirt. </span>
+ <br><br> <span style='color:blue;'>Pour la soirée, tenue vestimentaire décontractée et correcte, bien sûr pas de short, sandales, jeans et t-sirt. </span>
  <br> <br>Pour ceux qui viendront plus tôt (pour profiter du bel environnement et/ou jouer à la pétanque ou jouer au golf), il y aura la possibilité de prendre une douche et de se changer.
  
  <span *ngIf="Table_User_Data[identification.id].night!=='na'">
@@ -217,7 +219,7 @@
 <br>
 </span>
 
- <br><br> Comme précisé plus haut, le plus important maintenant est de remplir et valider le formulaire  <span style='color:blue; font-size:16px;'>AUSSI VITE QUE POSSIBLE</span>
+ <br><br> Le plus important maintenant est de remplir et valider le formulaire  <span style='color:blue; font-size:16px;'>AUSSI VITE QUE POSSIBLE</span>
     <br><br>
     Nous espérons que 
     <span *ngIf='Table_User_Data[identification.id].nbinvitees===2'> vous êtes </span> 
@@ -492,6 +494,46 @@
         <span *ngIf="updateRecord===1" style="color:black; font-size:14px; margin-left:20px;">{{message}}</span>
       </form>
       <br><br>
+</div>
+
+<div class="myText">
+  <br><br>
+    <span id='targetMenu'></span>
+    
+
+      <h2 style="color:blue; font-weight:bold;"> {{LanguageLabels[19]}}</h2>
+      
+Amuse-bouche
+<br>***
+<br>Raviolis de homard, consommé de champignons à la citronnelle
+<br>***
+<br>Terrine de foie gras de canard, chutney de saison
+<br>***
+<br>Filet de bœuf (ou poisson), milles feuille de légumes, pomme Anna et jus au thym
+<br>***
+<br>Plateau de fromages
+<br>***
+<br>Piece montée au chocolat et piece montée mangue, passion, framboise
+
+<br><br>
+
+<h2 style="color:blue; font-weight:bold;">Brunch</h2>
+Pain, beurre, confiture Viennoiseries
+<br>Céréales
+<br>Yogourts et fromage blanc
+<br> ***
+<br>Oeufs brouillés et bacon
+<br>***
+<br>Sélection de charcuterie et de viandes froides
+<br>Poissons froids, terrine de poissons
+<br>***
+<br>Sélection de salades fraîches composées et crudités de saison ***
+<br>Plateau de fromages raffinés
+<br>***
+<br>Mignardises
+<br>***
+<br>Boissons chaudes, Jus de fruit, Eaux minérales et  🍾
+
 </div>
 
 <div class="myText">

@@ -39,15 +39,15 @@ export class Event27AugComponent {
       phone:'',
     };
 
-    FrenchLabels=['Formulaire', 'Nombre de personnes','Plat principal','Boeuf', 'Poisson', "Reste la nuit à l'hotel", 'Oui', 'Non',
+    FrenchLabels=['Formulaire', 'Nombre de personnes','Plat principal','Bœuf', 'Poisson', "Reste la nuit à l'hotel", 'Oui', 'Non',
           "Si vous voulez jouer au golf merci d'indiquer",'jour','Samedi', 'Dimanche', 'nombre de joueurs', 'nombre de trous','trous',
-          'Nos commentaires','Vos commentaires (i.e. restriction nourriture, autres)','Valider', 'Adresse'];
+          'Nos commentaires','Vos commentaires (i.e. restriction nourriture, autres)','Valider', 'Adresse',"Dîner"];
     EnglishLabels=['Form', 'Number of people','Main dish','Beef', 'Fish', 'Spend the night at the hotel', 'Yes', 'No',
           'If you want to play golf please indicate','day','Saturday', 'Sunday', 'number of people', 'number of holes','holes',
-          'Our comments','Your feedback (e.g. food requirements, others)','Validate', 'Address'];
+          'Our comments','Your feedback (e.g. food requirements, others)','Validate', 'Address',"Dinner"];
     LanguageLabels=['', '','','', '', '', 'Yes', 'No',
           'If you want to play golf please indicate','','Saturday', 'Sunday', 'number of people', 'number of holes','holes',
-          '','Your feedback (e.g. food requirements, others)','Validate', 'Address'];
+          '','Your feedback (e.g. food requirements, others)','Validate', 'Address',""];
 
     @Output() returnDATA= new EventEmitter<any>();
 
